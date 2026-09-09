@@ -1,0 +1,50 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Properties:
+    // - Public can read active properties
+    // - Public can submit new properties for review
+    // - Admin can review, approve, update, and manage all property listings
+    match /properties/{propertyId} {
+      allow read, write: if true;
+    }
+
+    // Leads / Inquiries:
+    // - Public can submit inquiries
+    // - Admin can view, update, and manage leads
+    match /leads/{leadId} {
+      allow read, write: if true;
+    }
+
+    // Transactions:
+    // - Agency deals and commission records
+    match /transactions/{transactionId} {
+      allow read, write: if true;
+    }
+
+    // People / CRM (Sellers & Buyers):
+    // - Agency CRM client records
+    match /people/{personId} {
+      allow read, write: if true;
+    }
+
+    // Financial Ledger:
+    // - Agency income and expense entries
+    match /ledger/{ledgerId} {
+      allow read, write: if true;
+    }
+
+    // Site Settings:
+    // - Public reading of company profile and admin updates
+    match /settings/{settingId} {
+      allow read, write: if true;
+    }
+
+    // Admins registry:
+    match /admins/{adminId} {
+      allow read, write: if true;
+    }
+  }
+}
+

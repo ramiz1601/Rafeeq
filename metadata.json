@@ -1,0 +1,6 @@
+{
+  "name": "Rafeeq Homes and Properties",
+  "description": "Premier real estate agency and property management platform in Chitral, Pakistan. Featuring residential, land, and commercial listings with client inquiry handling and admin dashboard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

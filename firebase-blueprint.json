@@ -1,0 +1,136 @@
+{
+  "entities": {
+    "Property": {
+      "title": "Property",
+      "description": "Real estate property listing in Chitral",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 200 },
+        "type": { "type": "string", "enum": ["House", "Land", "Commercial", "Building"] },
+        "purpose": { "type": "string", "enum": ["Sale", "Rent"] },
+        "location": { "type": "string", "maxLength": 200 },
+        "size": { "type": "string", "maxLength": 100 },
+        "bedrooms": { "type": "number" },
+        "bathrooms": { "type": "number" },
+        "price": { "type": "number" },
+        "description": { "type": "string", "maxLength": 5000 },
+        "features": { "type": "array" },
+        "images": { "type": "array" },
+        "status": { "type": "string", "enum": ["Active", "Pending Review", "Sold", "Rented", "Rejected"] },
+        "ownerName": { "type": "string", "maxLength": 100 },
+        "ownerPhone": { "type": "string", "maxLength": 50 },
+        "dateAdded": { "type": "string", "maxLength": 50 },
+        "assignedAgent": { "type": "string", "maxLength": 100 },
+        "commissionPercent": { "type": "number" },
+        "featured": { "type": "boolean" }
+      },
+      "required": ["title", "type", "purpose", "location", "size", "price", "status", "ownerName", "ownerPhone"]
+    },
+    "Lead": {
+      "title": "Lead",
+      "description": "Client inquiry or property lead",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "maxLength": 100 },
+        "phone": { "type": "string", "maxLength": 50 },
+        "email": { "type": "string", "maxLength": 100 },
+        "propertyId": { "type": "string", "maxLength": 100 },
+        "propertyTitle": { "type": "string", "maxLength": 200 },
+        "status": { "type": "string", "enum": ["New", "Contacted", "Visiting", "Closed", "Negative"] },
+        "notes": { "type": "string", "maxLength": 2000 },
+        "date": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["name", "phone", "status"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Closed real estate deal and commission tracking",
+      "type": "object",
+      "properties": {
+        "propertyTitle": { "type": "string", "maxLength": 200 },
+        "buyerName": { "type": "string", "maxLength": 100 },
+        "sellerName": { "type": "string", "maxLength": 100 },
+        "amount": { "type": "number" },
+        "commission": { "type": "number" },
+        "commissionPercent": { "type": "number" },
+        "status": { "type": "string", "enum": ["Paid", "Pending"] },
+        "date": { "type": "string", "maxLength": 50 },
+        "agentName": { "type": "string", "maxLength": 100 }
+      },
+      "required": ["propertyTitle", "buyerName", "sellerName", "amount", "commission", "status"]
+    },
+    "PersonRecord": {
+      "title": "PersonRecord",
+      "description": "Buyer or Seller CRM record",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "maxLength": 100 },
+        "phone": { "type": "string", "maxLength": 50 },
+        "email": { "type": "string", "maxLength": 100 },
+        "propertyId": { "type": "string", "maxLength": 100 },
+        "propertyTitle": { "type": "string", "maxLength": 200 },
+        "propertyInterest": { "type": "string", "maxLength": 200 },
+        "notes": { "type": "string", "maxLength": 2000 },
+        "dateAdded": { "type": "string", "maxLength": 50 },
+        "type": { "type": "string", "enum": ["seller", "buyer"] },
+        "role": { "type": "string", "enum": ["Seller", "Buyer"] }
+      },
+      "required": ["name", "phone"]
+    },
+    "LedgerEntry": {
+      "title": "LedgerEntry",
+      "description": "Financial income or expense transaction",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string", "maxLength": 50 },
+        "description": { "type": "string", "maxLength": 200 },
+        "category": { "type": "string", "maxLength": 100 },
+        "type": { "type": "string", "enum": ["income", "expense"] },
+        "amount": { "type": "number" }
+      },
+      "required": ["date", "description", "category", "type", "amount"]
+    },
+    "CompanySettings": {
+      "title": "CompanySettings",
+      "description": "Agency profile and branding configuration",
+      "type": "object",
+      "properties": {
+        "companyName": { "type": "string", "maxLength": 200 },
+        "tagline": { "type": "string", "maxLength": 200 },
+        "secondaryTagline": { "type": "string", "maxLength": 200 },
+        "phone": { "type": "string", "maxLength": 50 },
+        "whatsapp": { "type": "string", "maxLength": 50 },
+        "email": { "type": "string", "maxLength": 100 },
+        "address": { "type": "string", "maxLength": 500 },
+        "adminEmail": { "type": "string", "maxLength": 100 }
+      },
+      "required": ["companyName", "phone", "email"]
+    }
+  },
+  "firestore": {
+    "/properties/{propertyId}": {
+      "schema": "Property",
+      "description": "Public and pending real estate property listings"
+    },
+    "/leads/{leadId}": {
+      "schema": "Lead",
+      "description": "Inquiries and leads submitted by buyers/visitors"
+    },
+    "/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Closed real estate transactions and commissions"
+    },
+    "/people/{personId}": {
+      "schema": "PersonRecord",
+      "description": "Seller and buyer CRM directory"
+    },
+    "/ledger/{ledgerId}": {
+      "schema": "LedgerEntry",
+      "description": "Agency income and expense ledger"
+    },
+    "/settings/{settingId}": {
+      "schema": "CompanySettings",
+      "description": "Global company and agency settings"
+    }
+  }
+}
